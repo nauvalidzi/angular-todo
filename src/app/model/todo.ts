@@ -3,4 +3,5 @@ export class Todo {
     title: string = '';
     body: string = '';
     status: number = 0;
+    message: string = '';
 }

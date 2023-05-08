@@ -19,6 +19,8 @@ export class TodoComponent implements OnInit {
   doneCheckCircle = fasCheckCircle;
   undoneCheckCircle = farCheckCircle;
   addNew = faPlusSquare;
+  alertNotif: boolean = false;
+  alertMessage: string = '';
 
   constructor(private todoService: TodoService) {
     //
@@ -31,7 +33,7 @@ export class TodoComponent implements OnInit {
       this.todoArr = res.sort((a: any, b: any) => {
         return a.status - b.status;
       });
-      console.log(this.todoObj);
+      // console.log(this.todoObj);
     }, err => {
       console.log(err.message);
     })
@@ -43,7 +45,8 @@ export class TodoComponent implements OnInit {
     this.todoObj.body = '';
     this.todoService.createTodo(this.todoObj).subscribe(res => {
       this.ngOnInit();
-      this.todoObj.title = '';
+      this.alertNotif = true;
+      this.alertMessage = res.message;
     }, err => {
       alert(err.message);
     })
@@ -54,6 +57,8 @@ export class TodoComponent implements OnInit {
     this.todoObj.body = value.body;
     this.todoService.updateTodo(this.todoObj).subscribe(res => {
       this.ngOnInit();
+      this.alertNotif = true;
+      this.alertMessage = res.message;
     }, err => {
       alert(err.message);
     })

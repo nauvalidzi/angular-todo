@@ -1,9 +1,13 @@
 <h1 class="mt-3">TodoApp!</h1>
 <h3>What's todo today?</h3>
+<div *ngIf="alertNotif" class="alert alert-success alert-dismissible fade show shadow mb-4" role="alert">
+    <strong>Success!</strong> {{ alertMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 <div class="card shadow my-3 py-3 px-4">
     <form id="newTodo" #newTodo="ngForm" (ngSubmit)="addTodo(newTodo.value)">
         <div class="input-group mb-3">
-            <input type="text" name="title" class="form-control" placeholder="Enter your task here ..." [(ngModel)]="todoObj.title">
+            <input type="text" name="title" class="form-control" placeholder="Enter your task here ..." ngModel>
             <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
                 <fa-icon [icon]="addNew" class="fs-5"></fa-icon>
             </button>
@@ -19,7 +23,8 @@
             <tbody>
                 <tr *ngFor="let todo of todoArr">
                     <td wdith="80%">
-                        <fa-icon [icon]="todo.status==1?doneCheckCircle:undoneCheckCircle" class="text-success" style="cursor: pointer" (click)="changeStatus(todo)"></fa-icon> {{ todo.title }}
+                        <fa-icon [icon]="todo.status==1?doneCheckCircle:undoneCheckCircle" class="text-success"
+                            style="cursor: pointer" (click)="changeStatus(todo)"></fa-icon> {{ todo.title }}
                     </td>
                     <td width="10%" class="text-center">
                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
@@ -27,6 +32,9 @@
                             <fa-icon [icon]="editIcon"></fa-icon>
                         </button>
                     </td>
+                </tr>
+                <tr>
+                    <td *ngIf="!todoArr.length" colspan="2" class="text-center">No data available.</td>
                 </tr>
             </tbody>
         </table>
@@ -45,11 +53,13 @@
                 <form id="todoForm" #todoForm="ngForm" (ngSubmit)="editTodo(todoForm.value)">
                     <div class="mb-3">
                         <label for="titleTodo" class="form-label">Title</label>
-                        <input type="text" name="title" id="editTitleTodo" class="form-control" [(ngModel)]="todoObj.title">
+                        <input type="text" name="title" id="editTitleTodo" class="form-control"
+                            [(ngModel)]="todoObj.title">
                     </div>
                     <div class="mb-3">
                         <label for="bodyTodo" class="form-label" id="bodyTodo">Body</label>
-                        <textarea name="body" class="form-control" placeholder="Edit your body task ..." [(ngModel)]="todoObj.body"></textarea>
+                        <textarea name="body" class="form-control" placeholder="Edit your body task ..."
+                            [(ngModel)]="todoObj.body"></textarea>
                     </div>
                 </form>
             </div>
